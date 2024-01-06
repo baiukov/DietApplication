@@ -2,7 +2,9 @@ package com.example.dietapplication_app
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.webkit.JavascriptInterface
+import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,7 +14,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.dietapplication_app.ui.theme.DietApplication_appTheme
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
@@ -51,30 +52,10 @@ class MainActivity : ComponentActivity() {
 
         webView = WebView(this)
         webView.settings.javaScriptEnabled = true
+        webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         webView.addJavascriptInterface(this, "AndroidInterface")
 
-        // Define your HTML content
-        val htmlContent = """
-            <!DOCTYPE html>
-            <html>
-                <head>
-                    <title>My HTML Page</title>
-                </head>
-                <body>
-                        <p id='main'>123</p>
-                        <script>
-                        function displayDataFromAndroid(data) {
-                            console.log("Data received from Android: " + data);
-                            document.getElementById('main').innerText = data;
-                        }
-                        </script>
-                
-                </body>
-            </html>
-        """.trimIndent()
-
-        webView.loadData(htmlContent, "text/html", "UTF-8")
-        setContentView(webView)
+        webView.loadUrl("http://127.0.0.1:5500/index.html")
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
@@ -85,6 +66,13 @@ class MainActivity : ComponentActivity() {
                 e.printStackTrace()
             }
         }
+    }
+
+    @JavascriptInterface
+    fun sendDataToAndroid(inputData: String) {
+        // Handle the data received from the HTML page
+        Log.d("MyApp", "Data received: $inputData")
+        println("Data received from HTML input: $inputData")
     }
 
     @SuppressLint("JavascriptInterface")
