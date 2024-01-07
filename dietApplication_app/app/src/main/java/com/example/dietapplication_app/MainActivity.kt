@@ -85,12 +85,11 @@ class MainActivity : ComponentActivity() {
 
     @SuppressLint("JavascriptInterface")
     @JavascriptInterface
-    fun emitServer(module: String, endpoint: String, data: String): String {
-        val url = "https://10.0.2.2:8080/api/$module/$endpoint"
-
+    fun emitServer(endpoint: String, data: String): String {
+        val url = "https://10.0.2.2:8080/api/$endpoint"
 
         val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
-        println(data)
+
         val request = Request.Builder()
             .url(url)
             .post(requestBody)
@@ -101,8 +100,7 @@ class MainActivity : ComponentActivity() {
         val responseBody = response.body?.string()
 
         if (responseBody != null) {
-            val eventName = "$module:$endpoint"
-            sendDataToWebView(eventName, responseBody)
+            sendDataToWebView(endpoint, responseBody)
         }
 
         response.close()

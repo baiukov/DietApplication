@@ -5,10 +5,6 @@ export class AppService {
 	private static events: Record<Events, () => {}> = {}
 	private static serverEvents: Record<string, () => {}> = {}
 
-	constructor() {
-
-	}
-
 	public static on = (eventName: Events, func: Function) => {
 		Object.defineProperty(this.events, eventName, { value: func })
 	}
@@ -27,24 +23,19 @@ export class AppService {
 
 	public static emitClient = (eventName: ServerEvents, data: any) => {
 		Object.getOwnPropertyNames(this.serverEvents).forEach((currentServerEventName) => {
-			console.log(eventName == currentServerEventName)
 			if (currentServerEventName !== eventName) return
 			// @ts-ignore
 			this.serverEvents[currentServerEventName](data)
 		})
 	}
 
-	public static emitServer = (event: ServerEvents, data: any) => {
-		const elements = event.split(":")
-		const module = elements[0]
-		const eventName = elements[1]
-
+	public static emitServer = (eventName: ServerEvents, data: any) => {
 		const eventData = {
 			data: data,
 		}
 
 		// @ts-ignore
-		AndroidInterface.emitServer(module, eventName, JSON.stringify(eventData))
+		AndroidInterface.emitServer(eventName, JSON.stringify(eventData))
 	}
 
 }

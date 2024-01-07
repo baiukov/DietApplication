@@ -18,14 +18,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/user/SendAge")
+    @PostMapping("/user/sendAge")
     public ResponseEntity<String> handleDataRequest(@RequestBody UserDataRequest requestData) {
         try {
             List<String> value = requestData.getData();
 
             Integer answer = User.getAge(Integer.parseInt(value.get(0)));
             return ResponseEntity.ok(answer.toString());
-            // return ResponseEntity.ok(Integer.toString(age));
         } catch (Exception e) {
             // Handle any exceptions that may occur during processing
             return ResponseEntity.status(500).body("Error processing data: " + e.getMessage());
