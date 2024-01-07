@@ -1,3 +1,3 @@
 export enum ServerEvents {
-	SENDAGE
+	SENDAGE = "user:SendAge"
 }

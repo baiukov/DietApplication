@@ -6,7 +6,7 @@ export class ExampleService {
 	constructor() {
 		$("#submit").click(() => {
 			const yearOfBirth = $("#ageInput").val()
-			AppService.emitServer(ServerEvents.SENDAGE, yearOfBirth)
+			AppService.emitServer(ServerEvents.SENDAGE, [yearOfBirth, yearOfBirth])
 		})
 	}
 

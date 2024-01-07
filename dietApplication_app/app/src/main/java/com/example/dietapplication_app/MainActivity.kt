@@ -75,42 +75,36 @@ class MainActivity : ComponentActivity() {
     }
 
     @JavascriptInterface
-    fun sendDataToWebView(data: String) {
+    fun sendDataToWebView(eventName: String, data: String) {
         // Call this method from your Kotlin code to send data to the WebView
         println(data)
         webView.post {
-            webView.evaluateJavascript("getData(0, '${data}')", null)
+            webView.evaluateJavascript("getData('${eventName}', '${data}')", null)
         }
     }
 
     @SuppressLint("JavascriptInterface")
     @JavascriptInterface
-    fun emitServer(data: String): String {
-        // Define the URL for your request
-        val url = "https://10.0.2.2:8080/api/data"
+    fun emitServer(module: String, endpoint: String, data: String): String {
+        val url = "https://10.0.2.2:8080/api/$module/$endpoint"
 
 
-        // Build a request
         val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
+        println(data)
         val request = Request.Builder()
             .url(url)
             .post(requestBody)
             .build()
 
-        // Execute the request
         val response = client.newCall(request).execute()
 
-        // Get the response body as a string
         val responseBody = response.body?.string()
-        println(responseBody)
 
         if (responseBody != null) {
-            sendDataToWebView(responseBody)
+            val eventName = "$module:$endpoint"
+            sendDataToWebView(eventName, responseBody)
         }
 
-        // Process the response as needed
-
-        // Don't forget to close the response to release resources
         response.close()
         return responseBody ?: "No data"
     }

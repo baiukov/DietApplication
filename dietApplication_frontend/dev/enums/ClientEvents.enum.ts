@@ -1,3 +1,0 @@
-export enum ClientEvents {
-	TEST
-}

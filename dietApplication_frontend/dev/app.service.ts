@@ -27,20 +27,24 @@ export class AppService {
 
 	public static emitClient = (eventName: ServerEvents, data: any) => {
 		Object.getOwnPropertyNames(this.serverEvents).forEach((currentServerEventName) => {
-			const currentEvent = parseInt(currentServerEventName) as ServerEvents
-			if (currentEvent !== eventName) return
+			console.log(eventName == currentServerEventName)
+			if (currentServerEventName !== eventName) return
 			// @ts-ignore
 			this.serverEvents[currentServerEventName](data)
 		})
 	}
 
-	public static emitServer = (eventName: ServerEvents, data: any) => {
+	public static emitServer = (event: ServerEvents, data: any) => {
+		const elements = event.split(":")
+		const module = elements[0]
+		const eventName = elements[1]
+
 		const eventData = {
-			key: eventName,
-			value: data
+			data: data,
 		}
+
 		// @ts-ignore
-		AndroidInterface.emitServer(JSON.stringify(eventData))
+		AndroidInterface.emitServer(module, eventName, JSON.stringify(eventData))
 	}
 
 }
