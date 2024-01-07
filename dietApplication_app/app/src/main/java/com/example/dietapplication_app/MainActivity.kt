@@ -19,11 +19,17 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.internal.tls.OkHostnameVerifier
 import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
+import java.util.concurrent.TimeUnit
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
@@ -32,7 +38,9 @@ import kotlin.reflect.KParameter
 
 class MainActivity : ComponentActivity() {
     private lateinit var webView: WebView
+    private lateinit var client: OkHttpClient
 
+    @OptIn(DelicateCoroutinesApi::class)
     @SuppressLint("CoroutineCreationDuringComposition", "SetJavaScriptEnabled", "JavascriptInterface")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +53,7 @@ class MainActivity : ComponentActivity() {
         sslContext.init(null, trustManagers, null)
 
         // Set the custom SSLContext on the OkHttpClient
-        val client = OkHttpClient.Builder()
+        client = OkHttpClient.Builder()
             .sslSocketFactory(sslContext.socketFactory, trustManagers[0] as X509TrustManager)
             .hostnameVerifier { _, _ -> true } // Bypass hostname verification
             .build()
@@ -54,14 +62,12 @@ class MainActivity : ComponentActivity() {
         webView.settings.javaScriptEnabled = true
         webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         webView.addJavascriptInterface(this, "AndroidInterface")
-
-        webView.loadUrl("http://127.0.0.1:5500/index.html")
+        webView.loadUrl("http://10.0.2.2:5500/index.html")
+        setContentView(webView)
 
         GlobalScope.launch(Dispatchers.IO) {
             try {
                 // Now you can make your network requests without SSL validation
-                val data = makeNetworkRequest(client)
-                sendDataToWebView(data)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -69,41 +75,26 @@ class MainActivity : ComponentActivity() {
     }
 
     @JavascriptInterface
-    fun sendDataToAndroid(inputData: String) {
-        // Handle the data received from the HTML page
-        Log.d("MyApp", "Data received: $inputData")
-        println("Data received from HTML input: $inputData")
-    }
-
-    @SuppressLint("JavascriptInterface")
-    @JavascriptInterface
     fun sendDataToWebView(data: String) {
         // Call this method from your Kotlin code to send data to the WebView
         println(data)
         webView.post {
-            webView.evaluateJavascript("displayDataFromAndroid('$data')", null)
+            webView.evaluateJavascript("getData(0, '${data}')", null)
         }
     }
 
-    private fun updateUI(data: String) {
-        setContent {
-            DietApplication_appTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    // Display the data in a Text composable
-                    Text(text = data, modifier = Modifier.fillMaxSize())
-                }
-            }
-        }
-    }
-
-    private suspend fun makeNetworkRequest(client: OkHttpClient): String {
+    @SuppressLint("JavascriptInterface")
+    @JavascriptInterface
+    fun emitServer(data: String): String {
         // Define the URL for your request
-        val url = "https://10.0.2.2:8080/hello"
+        val url = "https://10.0.2.2:8080/api/data"
+
 
         // Build a request
+        val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
         val request = Request.Builder()
             .url(url)
+            .post(requestBody)
             .build()
 
         // Execute the request
@@ -111,9 +102,13 @@ class MainActivity : ComponentActivity() {
 
         // Get the response body as a string
         val responseBody = response.body?.string()
+        println(responseBody)
+
+        if (responseBody != null) {
+            sendDataToWebView(responseBody)
+        }
 
         // Process the response as needed
-        println(responseBody)
 
         // Don't forget to close the response to release resources
         response.close()

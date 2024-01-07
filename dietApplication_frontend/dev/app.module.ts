@@ -1,5 +1,6 @@
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
+import { ExampleModule } from './example/example.module'
 
 export class AppModule {
 
@@ -11,6 +12,6 @@ export class AppModule {
 	}
 
 	private initModules = () => {
-
+		new ExampleModule()
 	}
 }

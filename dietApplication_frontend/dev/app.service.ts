@@ -1,6 +1,5 @@
-import { ClientEvents } from './enums/ClientEvents.enum'
-import { Events } from './enums/events.enum'
-import { ServerEvents } from './enums/serverEvents.enum'
+import { Events } from './enums/Events.enum'
+import { ServerEvents } from './enums/ServerEvents.enum'
 
 export class AppService {
 	private static events: Record<Events, () => {}> = {}
@@ -24,7 +23,6 @@ export class AppService {
 
 	public static onServer = (eventName: ServerEvents, func: Function) => {
 		Object.defineProperty(this.serverEvents, eventName, { value: func })
-		console.log(this.serverEvents, func)
 	}
 
 	public static emitClient = (eventName: ServerEvents, data: any) => {
@@ -36,9 +34,13 @@ export class AppService {
 		})
 	}
 
-	public static emitServer = (eventName: ClientEvents, data: any) => {
+	public static emitServer = (eventName: ServerEvents, data: any) => {
+		const eventData = {
+			key: eventName,
+			value: data
+		}
 		// @ts-ignore
-		AndroidInterface.emitServer(eventName, data)
+		AndroidInterface.emitServer(JSON.stringify(eventData))
 	}
 
 }

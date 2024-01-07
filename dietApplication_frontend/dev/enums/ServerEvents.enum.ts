@@ -1,3 +1,3 @@
 export enum ServerEvents {
-	TEST,
+	SENDAGE
 }
