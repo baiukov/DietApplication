@@ -1,7 +1,8 @@
-package com.example.dietaplication_backend;
+package vse.team.dietapplication_backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.annotation.Bean;
@@ -10,10 +11,11 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 @SpringBootApplication
-public class DietAplicationBackendApplication {
+@EntityScan("vse.team.dietapplication_backend.entities")
+public class DietApplicationBackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DietAplicationBackendApplication.class, args);
+		SpringApplication.run(DietApplicationBackendApplication.class, args);
 	}
 
 	@Bean

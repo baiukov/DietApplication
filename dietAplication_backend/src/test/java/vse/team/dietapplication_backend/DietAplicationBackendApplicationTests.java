@@ -1,4 +1,4 @@
-package com.example.dietaplication_backend;
+package vse.team.dietapplication_backend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

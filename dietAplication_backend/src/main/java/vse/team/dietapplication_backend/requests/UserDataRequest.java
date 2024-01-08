@@ -1,4 +1,4 @@
-package com.example.dietaplication_backend.User;
+package vse.team.dietapplication_backend.requests;
 
 import java.util.Arrays;
 import java.util.List;
