@@ -33,4 +33,21 @@
 - Pak je možné emulátor vybrat a aplikaci nastartovat. Měla by se zobrazit na emulátoru v pravé částí IDE
  <img src="https://github.com/baiukov/DietApplication/assets/57836519/6543afc3-1655-4121-8f4f-902946aea09b" width="600">
 
+## Návod na nastavení Frontend serveru
+- Nakopírujte a načtěte si repositář do lokálního gitu
+- Otevřte složku ```dietAplication_frontend``` jako projekt v libovolném IDE
+- Otevřte terminál a zadejte příkaz ```npm install``` pro stažení potřebných knihoven. Chvílku to potrvá
+ <img src="https://github.com/baiukov/DietApplication/assets/57836519/21dd49fb-b490-436a-8046-30771bb39723" width="400">
+
+- Pokud nemáte v levém panelu položku NPM Scripts, přidejte ji pomocí menu
+ <img src="https://github.com/baiukov/DietApplication/assets/57836519/d7cc6797-fb92-4182-9891-6115bbfa39b4" width="400">
+
+- Skripta jsou:
+  - minify - minifikace (komprimace) javasriptového kódu pro stránku. Dělá se jednou a naposled
+  - watch - přeloží typescriptový kód do javascriptového. Spustí se jenom jednou a pak hlídá změny v kódě
+- Pro spuštění aplikace je nutné využit nějaký lokální server. Je možné nato využit plagin pro VS Code ```Live Server```. Stahněte si ho, nainstalujte a pak v dolním menu je tlačitko pro spuštění serveru, který taky bude hlídat změny
+ <img src="https://github.com/baiukov/DietApplication/assets/57836519/d79bfe5a-eb65-4cd6-8356-b4bcff7cc336" width="600">
+
+### Po instalovaní všech tří prvků aplikací je možné ji spustit a ověřit funkčnost
+
 
