@@ -62,16 +62,16 @@ Jak je populární TS:
 
  TypeScript je striktně typovaný programovácí jazyk, proto je potřeba po inicializaci proměnné uvést vždycky její typ
  Některé užitečné typy:
- ```any``` - pokud nevíme který typ to bude, můžeme zadat tento typ
- ```number``` - jakékoliv číslo
- ```string``` - textový řádek
- ```boolean``` - true nebo false
- ```Function``` - metoda
- ```Array<string>``` - pole obsahující textové řádky
- ```Record<string, number>``` - záznam v podobě klíč/hodnota, kde klíč je řádek a hodnota je číslo
- ```UserService``` - můžeme využít i námi vytvořený typ, resp. třídu
- ```undefined``` - tato proměnná nebyla nadefinovaná a její hodnota je neznamá
- ```null``` - tato proměnná byla nadefinovaná, ale její hodnota je neznamá
+ - ```any``` - pokud nevíme který typ to bude, můžeme zadat tento typ
+ - ```number``` - jakékoliv číslo
+ - ```string``` - textový řádek
+ - ```boolean``` - true nebo false
+ - ```Function``` - metoda
+ - ```Array<string>``` - pole obsahující textové řádky
+ - ```Record<string, number>``` - záznam v podobě klíč/hodnota, kde klíč je řádek a hodnota je číslo
+ - ```UserService``` - můžeme využít i námi vytvořený typ, resp. třídu
+ - ```undefined``` - tato proměnná nebyla nadefinovaná a její hodnota je neznamá
+ - ```null``` - tato proměnná byla nadefinovaná, ale její hodnota je neznamá
  Případ použítí: ```const myVariable: number = 24```
  
  
