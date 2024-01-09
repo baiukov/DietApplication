@@ -29,6 +29,7 @@ ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-webkit = { group = "androidx.webkit", name = "webkit", version = "1.9.0" }
+volley = { group = "com.android.volley", name = "volley", version = "1.2.1" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

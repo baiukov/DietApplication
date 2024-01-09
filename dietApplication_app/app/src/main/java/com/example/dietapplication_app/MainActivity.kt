@@ -1,11 +1,12 @@
 package com.example.dietapplication_app
 
+import CustomWebViewClient
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.webkit.JavascriptInterface
-import android.webkit.WebSettings
-import android.webkit.WebView
+import android.util.Log
+import android.webkit.*
 import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -14,6 +15,8 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
+import okhttp3.Response
+import java.io.IOException
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -61,11 +64,39 @@ class MainActivity : ComponentActivity() {
         // přídá k javascriptu objekt AndroidInterface, který je mostem pro komunikaci s Androidem
         webView.addJavascriptInterface(this, "AndroidInterface")
 
-        // pošle požadavek na front-endový server a vygeneruje podle odpovědí stránku
-        webView.loadUrl("http://10.0.2.2:5500/index.html")
+        // spuštění asynchronního načítání HTML stránky z frontendového serveru
+        GlobalScope.launch(Dispatchers.IO) {
+            // odkaz na server
+            val url = "http://5.187.1.55/index.html"
+            // získaná dynamická HTML stránka
+            val html = sendHttpRequest(url)
 
-        // nastavení html stránky na hlávní obrázovku android aplikace
-        setContentView(webView)
+            launch(Dispatchers.Main) {
+                // nastavení html stránky na obrázovku mobilu
+                webView.loadDataWithBaseURL(url, html, "text/html", "utf-8", null)
+                setContentView(webView)
+            }
+        }
+    }
+
+    // metoda pro posílání http požadavků
+    private fun sendHttpRequest(url: String): String {
+        // stavitel požadavku podle adresy
+        val request = Request.Builder()
+            .url(url)
+            .build()
+        try {
+            // pošle požadavek
+            client.newCall(request).execute().use { response: Response ->
+                // pokud dopadl úspěšně, vrátí odpověď na něj
+                if (response.isSuccessful) {
+                    return response.body?.string() ?: ""
+                }
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return ""
     }
 
     // metoda pro posílání dat na frontend
@@ -83,7 +114,7 @@ class MainActivity : ComponentActivity() {
     @JavascriptInterface
     fun emitServer(endpoint: String, data: String): String {
         // URL adresa webového backend serveru. Endpoint - je koncový bod nastavený na serveru podle názvu události
-        val url = "https://10.0.2.2:8080/api/$endpoint"
+        val url = "https://5.187.1.55/api/$endpoint"
 
         // zabalí data do příslušné třídy pro požadvek
         val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
@@ -97,8 +128,11 @@ class MainActivity : ComponentActivity() {
         // pokusí se poslat požadavek na webserver
         val response = client.newCall(request).execute()
 
+
         // získá odpověď na požadavek
         val responseBody = response.body?.string()
+        println(responseBody)
+
 
         // pokud je odpověď existující, přepošle získaná data na frontend podle názvu eventu
         if (responseBody != null) {
