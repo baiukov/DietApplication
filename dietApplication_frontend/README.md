@@ -72,6 +72,7 @@ Jak je populární TS:
  - ```UserService``` - můžeme využít i námi vytvořený typ, resp. třídu
  - ```undefined``` - tato proměnná nebyla nadefinovaná a její hodnota je neznamá
  - ```null``` - tato proměnná byla nadefinovaná, ale její hodnota je neznamá
+ 
  Případ použítí: ```const myVariable: number = 24```
  
  
