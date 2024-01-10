@@ -1,8 +1,6 @@
-package vse.team.dietapplication_backend.services;
+package vse.team.dietapplication_backend.User;
 
 import org.springframework.stereotype.Component;
-import vse.team.dietapplication_backend.entities.UserEntity;
-import vse.team.dietapplication_backend.repositories.UserRepository;
 
 @Component
 public class UserService {

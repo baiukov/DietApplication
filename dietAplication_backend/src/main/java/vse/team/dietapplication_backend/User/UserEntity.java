@@ -1,13 +1,8 @@
-package vse.team.dietapplication_backend.entities;
+package vse.team.dietapplication_backend.User;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "example")

@@ -1,6 +1,5 @@
-package vse.team.dietapplication_backend.requests;
+package vse.team.dietapplication_backend.User;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class UserDataRequest {

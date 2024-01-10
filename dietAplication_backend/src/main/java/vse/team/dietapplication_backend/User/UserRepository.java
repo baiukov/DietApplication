@@ -1,12 +1,11 @@
-package vse.team.dietapplication_backend.repositories;
+package vse.team.dietapplication_backend.User;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.stereotype.Repository;
-import vse.team.dietapplication_backend.utils.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import vse.team.dietapplication_backend.entities.UserEntity;
+import org.springframework.stereotype.Repository;
+import vse.team.dietapplication_backend.utils.HibernateUtil;
 
 @Repository
 public class UserRepository {
