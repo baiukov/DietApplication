@@ -9,9 +9,10 @@ export class ExampleController {
 	private exampleService: ExampleService
 
 	constructor(exampleService: ExampleService) {
+		// proměnná ve které je uložená služba příkladového balíčku
 		this.exampleService = exampleService
 
-		// zare
+		// zaregestruje posluhač událostí ze serveru. 
 		AppService.onServer(ServerEvents.SENDAGE, (age: string) => {
 			this.exampleService.setAge(age)
 		})
