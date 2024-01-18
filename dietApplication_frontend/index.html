@@ -1,24 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Login</title>
+        <link rel="stylesheet" href="css/style.css">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="description" content="The webpage for diet application">
-    <meta name="keywords" content="diet, food, fitness, healthy">
-    <meta name="author" content="team">
-    <link rel="stylesheet" href="styles/style.css">
-    <title>Document</title>
-</head>
+        <meta name="description" content="The webpage for diet application">
+        <meta name="keywords" content="diet, plan, food, fitness, healthy">
 
-<body>
-    <!-- Příkladový HTML kód -->
-    <input id="ageInput" placeholder="Input year of birth">
-    <button id="submit">Submit</button>
-    <span>You are: </span><span id="age"></span><span> y.o </span>
+        <link rel='preconnect' href='https://fonts.googleapis.com'>
+        <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin>
+        <link
+            href='https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap'
+            rel='stylesheet'>
+    </head>
+    <body>
+        <div class="login-all">
+            <h2 class="login-h2">
+                Log in
+            </h2>
+            <div class="profile-form">
+                <input type="text" placeholder="E-mail" name="uname" required>
+                <input type="password" placeholder="Password" name="psw" required>
 
-</body>
+                <a><p class="frgt_pass">Forgot password?</p></a>
+
+                <button type="submit" class="login-submit">Log in</button>
+            </div>
+        </div>
+        <a href="signup/index.html"><p class="no_account">Don´t have an account?</p></a>
+    </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="build/bundle.js"></script>
 
