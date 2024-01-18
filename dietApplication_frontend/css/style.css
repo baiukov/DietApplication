@@ -1,0 +1,295 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #1A0612;
+    font-family: 'Playfair Display', serif;
+    font-family: 'Roboto', sans-serif;
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+/* unvisited link */
+a:link {
+    color: white;
+    text-decoration: none;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+/* mouse over link */
+a:hover {
+    color: white;
+    text-decoration: none;
+}
+
+/* selected link */
+a:active {
+    color: white;
+    text-decoration: none;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+/*LOGIN*/
+.login-all {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -53%);
+}
+
+.login-all2 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -56%);
+}
+
+.login-h2 {
+    color: white;
+    text-align: center;
+    font-size: 40px;
+    text-transform: uppercase;
+    text-shadow: 5px 5px 0px #511734;
+}
+
+.login-form input {
+    display: block;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: 1px 1px 2px rgb(0, 0, 0);
+    margin: 20px auto;
+}
+
+#dateofbirth{
+    width: 100%;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.frgt_pass {
+    color: white;
+    text-align: center;
+    font-weight: light;
+    font-size: 14px;
+    margin-top: 30px;
+}
+
+.no_account{
+    position: absolute;
+    font-size: 14px;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 30px;
+}
+
+.login-all p {
+    color: white;
+    text-align: center;
+}
+
+.login-submit {
+    border: none;
+    border-radius: 20px;
+    padding: 16px 30px;
+    margin: 40px auto 0 auto;
+    position: relative;
+    display: block;
+    background-color: #511734;
+    color: white;
+    font-weight: 700;
+    width: auto;
+}
+/*MAIN*/
+.main-nav{
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    text-align: right;
+}
+.main-nav i{
+    color: white;
+    font-size: 25px;
+    margin: 20px;
+}
+.main-button{
+    background-color: none;
+    border-radius: 30px;
+    padding: 10px 40px;
+    width: 200px;
+    margin: 20px auto;
+    display: block;
+    text-align: center;
+    box-shadow: 0px 0px 6px #d13f88;
+}
+.main-button i{
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 20px;
+    vertical-align: middle;
+}
+.main-button p{
+    display: inline-block;
+    vertical-align: middle;
+}
+.plans{
+    width: 100%;
+    margin: 0 auto;
+    max-height: 520px;
+    overflow: scroll;
+    position: absolute;
+    bottom: 0;
+}
+.main-h2 {
+    color: white;
+    text-align: center;
+    font-size: 27px;
+    margin-top: 10px;
+    text-shadow: 5px 5px 0px #511734;
+}
+.main-h3 {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    font-size: 14px;
+    margin-top: -10px;
+}
+.main-add{
+    border-radius: 100%;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    background-color: #511734;
+    color: white;
+    font-size: 27px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+    line-height: 60px;
+    z-index: 10;
+    box-shadow: 1px 1px 4px rgb(0, 0, 0);
+}
+.shadow-bottom{
+    background-image: linear-gradient(#51173400, #1A0612);
+    height: 30px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+}
+.plan-h2 {
+    color: white;
+    text-align: center;
+    font-size: 37px;
+    margin-top: 40px;
+    text-shadow: 7px 7px 0px #511734;
+}
+
+/*PLAN INFO*/
+.plan-h3 {
+    color: white;
+    text-align: center;
+    font-size: 37px;
+    margin-top: -20px;
+    text-shadow: 7px 7px 0px #511734;
+}
+.plan-nav{
+    width: 100%;
+    height: auto;
+    display: block;
+    position: relative;
+    text-align: left;
+}
+.plan-nav i{
+    color: white;
+    font-size: 25px;
+    margin: 20px;
+}
+.plan{
+    width: 100%;
+    margin: 0 auto;
+    height: 570px;
+    overflow: scroll;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.plan-day{
+    text-align: center;
+    background-color: none;
+    color: white;
+    display: block;
+    margin: 25px auto;
+    position: relative;
+    border-radius: 30px;
+    padding: 25px 0 10px 0px;
+    box-shadow: 0px 0px 6px #d13f88;
+    width: 80%;
+}
+.plan-day-left{
+    display: inline-block;
+    vertical-align: middle;
+
+}
+.plan-day-left h2{
+    font-size: 40px;
+    margin: 0 0 10px 0;
+}
+.plan-day-right{
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 15px;
+}
+.plan-label{
+    opacity: 0.6;
+    font-size: 11px;
+    margin: 0 auto;
+}
+.plan-meal{
+    margin: 4px auto 14px auto;
+    font-size: 16px;
+}
+
+/*PROFILE*/
+#profile-all{
+    width: 60%;
+    display: block;
+    margin: 0 auto;
+}
+.profile-form input {
+    display: block;
+    padding: 12px 10px;
+    border: none;
+    margin: 20px auto;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid #ffffff;
+    color: white;
+}
+.profile-form textarea {
+    display: block;
+    padding: 12px 10px;
+    border: none;
+    margin: 20px auto;
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid #ffffff;
+    color: white;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.025);
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(0.5);
+}
