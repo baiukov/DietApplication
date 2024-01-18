@@ -26,7 +26,7 @@ public class UserService {
         UserEntity savedUser = userRepository.getById(id);
 
         // odečte z letošního roku, který je získán z db, rok narození
-        Integer answer = savedUser.getCurrentYear() - Integer.parseInt(savedUser.getYearOfBirth());
+        Integer answer = savedUser.getCurrentYear() - savedUser.getYearOfBirth();
         // vrátí odpověď
         return answer;
     }
