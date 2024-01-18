@@ -62,7 +62,7 @@ class MainActivity : ComponentActivity() {
         webView.addJavascriptInterface(this, "AndroidInterface")
 
         // pošle požadavek na front-endový server a vygeneruje podle odpovědí stránku
-        webView.loadUrl("http://10.0.2.2:5500/index.html")
+        webView.loadUrl("http://5.187.1.55/")
 
         // nastavení html stránky na hlávní obrázovku android aplikace
         setContentView(webView)
@@ -83,7 +83,7 @@ class MainActivity : ComponentActivity() {
     @JavascriptInterface
     fun emitServer(endpoint: String, data: String): String {
         // URL adresa webového backend serveru. Endpoint - je koncový bod nastavený na serveru podle názvu události
-        val url = "https://10.0.2.2:8080/api/$endpoint"
+        val url = "http://5.187.1.55/api/$endpoint"
 
         // zabalí data do příslušné třídy pro požadvek
         val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
