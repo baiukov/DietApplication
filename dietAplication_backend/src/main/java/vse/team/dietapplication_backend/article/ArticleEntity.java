@@ -3,9 +3,11 @@ package vse.team.dietapplication_backend.article;
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
+import vse.team.dietapplication_backend.comment.CommentEntity;
 import vse.team.dietapplication_backend.user.UserEntity;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "Articles")
@@ -21,6 +23,12 @@ public class ArticleEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id", referencedColumnName = "id")
     private UserEntity author;
+
+    @OneToMany(cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            mappedBy = "article")
+    private List<CommentEntity> comments;
 
     @Column(name = "content", columnDefinition = "TEXT", nullable = false)
     private String content;
@@ -38,6 +46,10 @@ public class ArticleEntity {
 
     public UserEntity getAuthor() {
         return author;
+    }
+
+    public List<CommentEntity> getComments() {
+        return comments;
     }
 
     public String getContent() {
@@ -58,6 +70,10 @@ public class ArticleEntity {
 
     public void setAuthor(UserEntity author) {
         this.author = author;
+    }
+
+    public void setComments(List<CommentEntity> comments) {
+        this.comments = comments;
     }
 
     public void setContent(String content) {
