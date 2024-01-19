@@ -15,7 +15,7 @@ public class UserService {
         // vytvoří novou entitu uživatele
         UserEntity userEntity = new UserEntity();
         // nastaví ji rok, který byl získán
-        userEntity.setYearOfBirth(yearOfBirth);
+        userEntity.setYearOfBirth(Integer.parseInt(yearOfBirth));
 
         // vytvoří novou instanci správce repositáře
         UserRepository userRepository = new UserRepository();
