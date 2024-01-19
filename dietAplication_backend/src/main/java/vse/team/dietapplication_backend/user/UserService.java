@@ -1,4 +1,4 @@
-package vse.team.dietapplication_backend.User;
+package vse.team.dietapplication_backend.user;
 
 import org.springframework.stereotype.Component;
 

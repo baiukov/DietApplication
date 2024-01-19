@@ -1,8 +1,9 @@
-package vse.team.dietapplication_backend.User;
+package vse.team.dietapplication_backend.profile;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
+import vse.team.dietapplication_backend.user.UserEntity;
 
 @Entity
 @Table(name = "Profiles")
@@ -14,6 +15,10 @@ public class ProfileEntity {
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(name = "id", columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4")
     private String id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
+    private UserEntity user;
 
     @Column(name = "name", length = 25, nullable = false)
     private String name;
@@ -44,6 +49,10 @@ public class ProfileEntity {
 
     public String getId() {
         return id;
+    }
+
+    public UserEntity getUser() {
+        return user;
     }
 
     public String getName() {
@@ -84,6 +93,10 @@ public class ProfileEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
     }
 
     public void setName(String name) {

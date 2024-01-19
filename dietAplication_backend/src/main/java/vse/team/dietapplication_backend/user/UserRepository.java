@@ -1,7 +1,5 @@
-package vse.team.dietapplication_backend.User;
+package vse.team.dietapplication_backend.user;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
