@@ -1,10 +1,9 @@
 package vse.team.dietapplication_backend.utils;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
-import vse.team.dietapplication_backend.entities.UserEntity;
+import vse.team.dietapplication_backend.user.UserEntity;
 
 /*
  * Třída HibernateUtil - je pomocní třída pro knihovnu Hibernate, nastaví konfiguraci práce s databází

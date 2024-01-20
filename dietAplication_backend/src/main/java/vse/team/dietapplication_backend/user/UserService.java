@@ -1,4 +1,4 @@
-package vse.team.dietapplication_backend.User;
+package vse.team.dietapplication_backend.user;
 
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class UserService {
         // vytvoří novou entitu uživatele
         UserEntity userEntity = new UserEntity();
         // nastaví ji rok, který byl získán
-        userEntity.setYearOfBirth(yearOfBirth);
+        userEntity.setYearOfBirth(Integer.parseInt(yearOfBirth));
 
         // vytvoří novou instanci správce repositáře
         UserRepository userRepository = new UserRepository();
@@ -26,7 +26,7 @@ public class UserService {
         UserEntity savedUser = userRepository.getById(id);
 
         // odečte z letošního roku, který je získán z db, rok narození
-        Integer answer = savedUser.getCurrentYear() - Integer.parseInt(savedUser.getYearOfBirth());
+        Integer answer = savedUser.getCurrentYear() - savedUser.getYearOfBirth();
         // vrátí odpověď
         return answer;
     }
