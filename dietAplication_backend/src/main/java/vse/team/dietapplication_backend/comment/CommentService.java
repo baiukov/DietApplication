@@ -6,8 +6,6 @@ import org.springframework.stereotype.Service;
 import vse.team.dietapplication_backend.user.UserEntity;
 import vse.team.dietapplication_backend.user.UserRepository;
 
-import java.util.List;
-
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;

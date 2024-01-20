@@ -1,4 +1,4 @@
-package vse.team.dietapplication_backend.comment;
+package vse.team.dietapplication_backend.article;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -6,21 +6,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/comments")
-public class CommentController {
+@RequestMapping("/api/articles")
+public class ArticleController {
 
-    private final CommentService commentService;
+    private final ArticleService articleService;
 
     @Autowired
-    public CommentController(CommentService commentService) {
-        this.commentService = commentService;
+    public ArticleController(ArticleService articleService) {
+        this.articleService = articleService;
     }
 
     @PostMapping("/{userId}")
-    public ResponseEntity<String> createComment(@PathVariable String userId, @RequestBody CommentEntity comment) {
+    public ResponseEntity<String> createArticle(@PathVariable String userId, @RequestBody ArticleEntity article) {
         try {
-            commentService.createComment(comment, userId);
-            return ResponseEntity.status(HttpStatus.CREATED).body("Comment created successfully.");
+            articleService.createArticle(article, userId);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Article created successfully.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error processing data: " + e.getMessage());
@@ -28,9 +28,9 @@ public class CommentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateComment(@PathVariable String id, @RequestBody CommentEntity comment) {
+    public ResponseEntity<String> updateArticle(@PathVariable String id, @RequestBody ArticleEntity article) {
         try {
-            commentService.updateComment(id, comment);
+            articleService.updateArticle(id, article);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -39,9 +39,9 @@ public class CommentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteComment(@PathVariable String id) {
+    public ResponseEntity<String> deleteArticle(@PathVariable String id) {
         try {
-            commentService.deleteComment(id);
+            articleService.deleteArticle(id);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -50,11 +50,11 @@ public class CommentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCommentById(@PathVariable String id) {
+    public ResponseEntity<?> getArticleById(@PathVariable String id) {
         try {
-            CommentEntity comment = commentService.getCommentById(id);
-            if (comment != null) {
-                return ResponseEntity.ok(comment);
+            ArticleEntity article = articleService.getArticleById(id);
+            if (article != null) {
+                return ResponseEntity.ok(article);
             }
             else {
                 return ResponseEntity.notFound().build();
