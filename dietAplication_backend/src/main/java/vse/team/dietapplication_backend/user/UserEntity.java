@@ -52,6 +52,9 @@ public class UserEntity {
     @Column(name = "is_blocked", nullable = false)
     private Boolean isBlocked;
 
+    @Column(name = "is_admin", nullable = false)
+    private Boolean isAdmin;
+
     public String getId() {
         return id;
     }
@@ -88,6 +91,10 @@ public class UserEntity {
         return isBlocked;
     }
 
+    public boolean getIsAdmin() {
+        return isAdmin;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -122,5 +129,9 @@ public class UserEntity {
 
     public void setIsBlocked(Boolean isBlocked) {
         this.isBlocked = isBlocked;
+    }
+
+    public void setIsAdmin(Boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 }

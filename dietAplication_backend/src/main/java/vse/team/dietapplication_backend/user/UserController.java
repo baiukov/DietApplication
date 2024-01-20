@@ -1,10 +1,11 @@
 package vse.team.dietapplication_backend.user;
 
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import vse.team.dietapplication_backend.article.ArticleEntity;
+import vse.team.dietapplication_backend.comment.CommentEntity;
 
 import java.util.List;
 
@@ -16,19 +17,70 @@ import java.util.List;
  * @author Aleksei Baiukov
  */
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserController {
 
     // konstantní proměnná služby uživatelů
     private final UserService userService;
+
 
     // v konstruktoru třídy si uloží službu do proměnné
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
+    @PostMapping("/{userId}/articles")
+    public ResponseEntity<String> addArticle(@PathVariable String userId, @RequestBody ArticleEntity article) {
+        try {
+            String articleId = userService.addArticleForUser(article, userId);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Article created successfully with ID: " + articleId + "\n" +
+                "By user: " + userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/articles/{articleId}")
+    public ResponseEntity<String> updateUserArticle(@PathVariable String userId, @PathVariable String articleId, @RequestBody ArticleEntity updatedArticle) {
+        try {
+            userService.updateArticleForUser(userId, updatedArticle, articleId);
+            return ResponseEntity.ok("Article updated successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/{userId}/comments")
+    public ResponseEntity<String> addComment(@PathVariable String userId, @RequestBody CommentEntity comment) {
+        try {
+            String commentId = userService.addCommentForUser(comment, userId);
+            return ResponseEntity.status(HttpStatus.CREATED).body("Comment created successfully with ID: " + commentId + "\n" +
+                    "By user: " + userId);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/{userId}/comments/{commentId}")
+    public ResponseEntity<String> updateUserComment(@PathVariable String userId, @PathVariable String commentId, @RequestBody CommentEntity updatedComment) {
+        try {
+            userService.updateCommentForUser(userId, updatedComment, commentId);
+            return ResponseEntity.ok("Comment updated successfully.");
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Error: " + e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Error: " + e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error: " + e.getMessage());
+        }
+    }
+
     // nastavení mapování událostí sendAge
-    @PostMapping("user/sendAge")
+    @PostMapping("/sendAge")
     public ResponseEntity<String> handleDataRequest(@RequestBody UserDataRequest requestData) {
         try {
             // získá data z třídy parsera UserDataRequest
