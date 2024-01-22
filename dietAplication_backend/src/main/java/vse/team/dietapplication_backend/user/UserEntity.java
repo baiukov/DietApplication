@@ -2,7 +2,6 @@ package vse.team.dietapplication_backend.user;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
@@ -13,7 +12,6 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 @Component
-@Access(AccessType.FIELD)
 public class UserEntity {
 
     @Id
@@ -27,7 +25,7 @@ public class UserEntity {
 //            fetch = FetchType.LAZY,
 //            mappedBy = "user")
 //    private ProfileEntity profile;
-
+//
 //    @OneToMany(cascade = CascadeType.ALL,
 //            orphanRemoval = true,
 //            fetch = FetchType.LAZY,
@@ -43,8 +41,7 @@ public class UserEntity {
     @Column(name = "email", length = 50, nullable = false)
     private String email;
 
-    @Column(name = "password", length = 1000, nullable = false)
-    private String password;
+    private int currentYear = 2024;
 
     @Column(name = "year_of_birth", nullable = false)
     private int yearOfBirth;
@@ -65,7 +62,7 @@ public class UserEntity {
 //    public ProfileEntity getProfile() {
 //        return profile;
 //    }
-
+//
 //    public List<CommentEntity> getComments() {
 //        return comments;
 //    }
@@ -78,7 +75,9 @@ public class UserEntity {
         return email;
     }
 
-    public String getPassword() { return password; }
+    public int getCurrentYear() {
+        return currentYear;
+    }
 
     public int getYearOfBirth() {
         return yearOfBirth;
@@ -100,10 +99,10 @@ public class UserEntity {
         this.id = id;
     }
 
-/*    public void setProfile(ProfileEntity profile) {
-        this.profile = profile;
-    }*/
-
+//    public void setProfile(ProfileEntity profile) {
+//        this.profile = profile;
+//    }
+//
 //    public void setComments(List<CommentEntity> comments) {
 //        this.comments = comments;
 //    }
@@ -116,7 +115,9 @@ public class UserEntity {
         this.email = email;
     }
 
-    public void setPassword(String password) { this.password = password; }
+    public void setCurrentYear(int currentYear) {
+        this.currentYear = currentYear;
+    }
 
     public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;
