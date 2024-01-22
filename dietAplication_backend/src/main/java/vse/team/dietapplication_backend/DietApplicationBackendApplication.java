@@ -17,7 +17,7 @@ import java.net.UnknownHostException;
  * @author Aleksei Baiukov
  */
 @SpringBootApplication
-@EntityScan({
+@EntityScan(basePackages = {
 		"vse.team.dietapplication_backend.profile",
 		"vse.team.dietapplication_backend.user"
 })

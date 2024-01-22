@@ -22,22 +22,22 @@ public class ProfileEntity {
     @MapsId
     private UserEntity user;
 
-    @Column(name = "name", length = 25, nullable = false)
+    @Column(name = "name", length = 25)
     private String name;
 
-    @Column(name = "surname", length = 50, nullable = false)
+    @Column(name = "surname", length = 50)
     private String surname;
 
-    @Column(name = "profile_picture", nullable = false)
+    @Column(name = "profile_picture")
     private String profilePicture;
 
-    @Column(name = "preference", nullable = false)
+    @Column(name = "preference")
     private String preference;
 
-    @Column(name = "allergy", nullable = false)
+    @Column(name = "allergy")
     private String allergy;
 
-    @Column(name = "biography", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "biography", columnDefinition = "TEXT")
     private String biography;
 
     @Column(name = "weight", nullable = false)

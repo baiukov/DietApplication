@@ -1,4 +1,4 @@
-package vse.team.dietapplication_backend.dataRequests;
+package vse.team.dietapplication_backend.user;
 
 import java.util.List;
 

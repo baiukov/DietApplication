@@ -6,21 +6,28 @@ import { ServerEvents } from '../enums/ServerEvents.enum'
 */
 export class UserService {
 
-	private userData: Record<string, string | number> = {}
-
 	constructor () {
 		this.watch();
 	}
 
 	public watch = () => {
 		$("#registerForm").on("submit", () => {
-			this.userData.email = $("#newEmail").val() as string
-			this.userData.password = $("#newPassword").val() as string
+			const email = $("#newEmail").val() as string
+			const password = $("#newPassword").val() as string
+
+			const userData = {
+				email: email,
+				password: password, 
+			}
+
+			sessionStorage.setItem("userData", JSON.stringify(userData))
 		})
 
 		$("#registerForm2").on("submit", () => {
-
-			if (!this.userData.email) return;
+			const userDataString = sessionStorage.getItem("userData")
+			
+			if (!userDataString) return
+			const userData = JSON.parse(userDataString)
 
 			const gender = $("#gender").val() as string
 			const height = $("#height").val() as string
@@ -30,8 +37,8 @@ export class UserService {
 			AppService.emitServer(
 				ServerEvents.RegisterUser, 
 				[
-					this.userData.email,
-					this.userData.password,
+					userData.email,
+					userData.password,
 					gender,
 					height,
 					weight,
@@ -39,6 +46,51 @@ export class UserService {
 				]
 			)
 		})
+
+		$("#loginForm").on("submit", () => {
+
+			const email = $("#email").val()
+			const password = $("#password").val()
+
+			AppService.emitServer(
+				ServerEvents.LoginUser,
+				[
+					email,
+					password
+				]
+			)
+		})
+
+		$("#updateForm").on("submit", () => {
+
+			const toUpdate = {
+				"gender": $("#gender").val() || undefined,
+				"height": $("#height").val() || undefined,
+				"weight": $("#weight").val() || undefined,
+				"date": $("#date").val() || undefined,
+				"alergies": $("#alergies").val() || undefined,
+			}
+
+			Object.entries(toUpdate).forEach((entry: Array<any>) => {
+				const key = entry[0]
+				const value = entry[1]
+
+				if (!value) return;
+
+				const userID = sessionStorage.getItem("userID")
+				if (!userID) return;
+
+				console.log(userID)
+				AppService.emitServer(ServerEvents.UpdateUser, [userID, key, value]);
+			})
+
+		})
+	}
+
+	public login = (userID: string) => {
+		if (!userID) return;
+		sessionStorage.setItem("userID", userID)
+		window.location.href = './main/index.html'
 	}
 
 }

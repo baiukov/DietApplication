@@ -17,16 +17,18 @@
         Max
     </h2>
     <div id="profile-all">
-        <div class="profile-form">
-            <input type="text" placeholder="Gender" name="gender" required>
-            <input type="text" placeholder="Height" name="height" required>
-            <input type="text" placeholder="Weight" name="weight" required>
-            <input type="date" name="dateofbirth" id="dateofbirth" required>
-            <input type="text" placeholder="Alergies" name="alergies" required>
+        <form id='updateForm' class="profile-form" action='../main/'>
+            <input type="text" placeholder="Gender" id="gender">
+            <input type="number" placeholder="Height" id="height">
+            <input type="number" placeholder="Weight" id="weight">
+            <input type="date" name="dateofbirth" id="dateofbirth">
+            <input type="text" placeholder="Alergies" id="alergies">
 
             <button type="submit" class="login-submit">Update</button>
-        </div>
+        </form>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="../build/bundle.js"></script>
 
 </html>

@@ -13,7 +13,7 @@ export class ExampleController {
 		this.exampleService = exampleService
 
 		// zaregestruje posluhač událostí ze serveru. 
-		AppService.onServer(ServerEvents.SENDAGE, (age: string) => {
+		AppService.onServer(ServerEvents.SendAge, (age: string) => {
 			this.exampleService.setAge(age)
 		})
 	}

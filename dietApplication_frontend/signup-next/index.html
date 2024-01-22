@@ -9,22 +9,24 @@
 </head>
 
 <body>
-    <form id='registerForm2' class="login-all2">
+    <div class="login-all2">
         <h2 class="login-h2">
             Profile Setup
         </h2>
-        <div class="profile-form">
+        <form id='registerForm2' class="profile-form" action='../index.html'>
             <input type="text" placeholder="Gender" id="gender" required>
             <input type="number" placeholder="Height" id="height" required>
             <input type="number" placeholder="Weight" id="weight" required>
             <input type="date" id="dateOfBirth" required>
 
-            <a href="../main/index.html"><button type="submit" class="login-submit">Sign up</button></a>
-        </div>
-    </form>
+            <button type="submit" class="login-submit">Sign up</button>
+        </form>
+    </div>
     <a href="../index.html">
         <p class="no_account">Already have an account?</p>
     </a>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="../build/bundle.js"></script>
 
 </html>

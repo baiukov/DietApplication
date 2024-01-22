@@ -2,8 +2,12 @@ package vse.team.dietapplication_backend.user;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import vse.team.dietapplication_backend.profile.ProfileEntity;
 import vse.team.dietapplication_backend.utils.HibernateUtil;
+
+import java.util.List;
 
 /*
  * Třída UserRepository - je třída repositáře uživatele, která se zabývá operováním s jeho uložištěm.
@@ -16,7 +20,7 @@ import vse.team.dietapplication_backend.utils.HibernateUtil;
 public class UserRepository {
 
     // metoda uložení nové entity uživatele
-    public String save(UserEntity entity) {
+    public String save(UserEntity user) {
         // vytvoří novou relaci pro provedení transakce
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;
@@ -26,7 +30,8 @@ public class UserRepository {
             // spustí novou transakci
             transaction = session.beginTransaction();
             // nastaví transakci na uložení nového uživatele do tabulky, a vrácení zpět jeho ID
-            generatedId = (String) session.save(entity);
+            session.save(user);
+
             // pokusí se provést tuto transakci
             transaction.commit();
         } catch (Exception e) {
@@ -57,12 +62,20 @@ public class UserRepository {
     }
 
     public UserEntity getByEmail(String email) {
-        Session session = HibernateUtil.getSessionFactory().openSession();
-        try {
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            String hql = "FROM UserEntity U WHERE U.email = :email";
+            Query<UserEntity> query = session.createQuery(hql, UserEntity.class);
+            query.setParameter("email", email);
+            List<UserEntity> results = query.list();
 
-            return session.get(UserEntity.class, email);
-        } finally {
-             session.close();
+            if (!results.isEmpty()) {
+                return results.get(0);
+            } else {
+                return null; // No user found with the specified email
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
     }
 

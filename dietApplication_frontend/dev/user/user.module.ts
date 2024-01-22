@@ -6,6 +6,7 @@ export class UserModule {
 	constructor() {
 		const userService = new UserService()
 		new UserController(userService)
+
 	}
 
 }

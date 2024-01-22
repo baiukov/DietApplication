@@ -7,7 +7,7 @@ import { ServerEvents } from './enums/ServerEvents.enum'
 */
 export class AppService {
 	// objekt, ve kterém se uloží zaregistrováné lokální událostí 
-	private static events: Record<Events, Function> = {}
+	private static events: Record<Events, Function>;
 	
 	// objekt, ve kterém se uloží vnější serverové událostí
 	private static serverEvents: Record<string, Function> = {}
@@ -41,6 +41,7 @@ export class AppService {
 		// získá všechny klíče existujícího objektu serverových událostí
 		Object.getOwnPropertyNames(this.serverEvents).forEach((currentServerEventName) => {
 			// pokud je současný název eventu je shodný s vyvoláným, vyvolá příslušnou funkci s poskytnutými daty
+			console.log(currentServerEventName, eventName, data)
 			if (currentServerEventName !== eventName) return
 			this.serverEvents[currentServerEventName](data)
 		})

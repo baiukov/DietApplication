@@ -8,6 +8,11 @@ import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.article.ArticleService;
 import vse.team.dietapplication_backend.comment.CommentEntity;
 import vse.team.dietapplication_backend.comment.CommentService;
+import vse.team.dietapplication_backend.profile.ProfileEntity;
+import vse.team.dietapplication_backend.profile.ProfileRepository;
+
+import java.time.LocalDate;
+import java.util.Date;
 
 /*
  * Třída UserService - je třída služby uživatelů, která se zabývá zpracováním jejích logiky.
@@ -81,15 +86,14 @@ public class UserService {
         // vytvoří novou entitu uživatele
         UserEntity userEntity = new UserEntity();
         // nastaví ji rok, který byl získán
-        userEntity.setYearOfBirth(Integer.parseInt(yearOfBirth));
 
         // vytvoří novou instanci správce repositáře
         UserRepository userRepository = new UserRepository();
         // pokusí se nového uživatele uložit do uložiště
-        String id = userRepository.save(userEntity);
+        //String id = userRepository.save(userEntity);
 
         // získá nového uživatele podle identifikáčního čísla
-        UserEntity savedUser = userRepository.getById(id);
+        //UserEntity savedUser = userRepository.getById(id);
 
 //        // odečte z letošního roku, který je získán z db, rok narození
 //        Integer answer = savedUser.getCurrentYear() - savedUser.getYearOfBirth();
@@ -97,23 +101,79 @@ public class UserService {
         return 0;
     }
 
-    public boolean authorise(String email, String password) {
+    public String authorise(String email, String password) {
         UserEntity user = this.userRepository.getByEmail(email);
-        if (user == null) return false;
+                                                                                if (user == null) return null;
+
+
 
         boolean isVerified = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword()).verified;
-        return isVerified;
+        return isVerified ? user.getId() : null;
     }
 
-    public String save(String email, String password) {
+    public String save(
+            String email,
+            String rawPassword,
+            String sex,
+            String dateOfBirth,
+            double heigth,
+            double weight
+    ) {
         UserEntity newUser = new UserEntity();
+
+        int costFactor = 12;
+        String password = BCrypt.withDefaults().hashToString(costFactor, rawPassword.toCharArray());
 
         newUser.setEmail(email);
         newUser.setPassword(password);
+        newUser.setIsAdmin(false);
+        newUser.setIsBlocked(false);
+        newUser.setSex(sex);
 
-        UserRepository userRepository = new UserRepository();
-        // pokusí se nového uživatele uložit do uložiště
+        LocalDate localDate = LocalDate.parse(dateOfBirth);
+        newUser.setDateOfBirth(localDate);
+
+        ProfileEntity userProfile = new ProfileEntity();
+        userProfile.setHeight(heigth);
+        userProfile.setWeight(weight);
+
         String id = userRepository.save(newUser);
+
+        userProfile.setUser(newUser);
+        ProfileRepository profileRepository = new ProfileRepository();
+        profileRepository.save(userProfile);
         return id;
+    }
+
+    public Object update(String userID, String paramName, Object parameter) {
+        UserEntity user = this.userRepository.getById(userID);
+        if (user == null) return null;
+
+        if (paramName.equals("gender")) {
+            user.setSex((String) parameter);
+            this.userRepository.update(user);
+            return parameter;
+        } else if (paramName.equals("dateOfBirth")) {
+            user.setDateOfBirth(LocalDate.parse((String) parameter));
+            this.userRepository.update(user);
+            return parameter;
+        }
+
+        ProfileEntity userProfile = user.getProfile();
+
+        switch (paramName) {
+            case "height":
+                userProfile.setHeight((Double) parameter);
+                break;
+            case "weight":
+                userProfile.setWeight((Double) parameter);
+                break;
+            case "alergies":
+                userProfile.setAllergy((String) parameter);
+                break;
+        }
+        ProfileRepository profileRepository = new ProfileRepository();
+        profileRepository.update(userProfile);
+        return parameter;
     }
 }

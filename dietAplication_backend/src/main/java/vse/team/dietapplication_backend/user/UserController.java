@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
-import vse.team.dietapplication_backend.dataRequests.UserAccountRequest;
 
 import java.util.List;
 
@@ -97,7 +96,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Boolean> authorise(@RequestBody UserAccountRequest requestData) {
+    public ResponseEntity<String> authorise(@RequestBody UserAccountRequest requestData) {
         try {
 
             List<String> inputData = requestData.getData();
@@ -105,10 +104,15 @@ public class UserController {
             String email = inputData.get(0);
             String password = inputData.get(1);
 
-            return ResponseEntity.ok(userService.authorise(email, password));
+
+
+            String response = userService.authorise(email, password);
+            System.out.println(response);
+
+            return ResponseEntity.ok(response);
 
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(false);
+            return ResponseEntity.status(500).body(null);
         }
     }
 
@@ -120,11 +124,34 @@ public class UserController {
             String email = inputData.get(0);
             String password = inputData.get(1);
             String gender = inputData.get(2);
-            int height = Integer.parseInt(inputData.get(3));
-            int weight = Integer.parseInt(inputData.get(4));
+            double height = Double.parseDouble(inputData.get(3));
+            double weight = Double.parseDouble(inputData.get(4));
             String dateOfBirth = inputData.get(5);
 
-            userService.save(email, password);
+            userService.save(
+                    email,
+                    password,
+                    gender,
+                    dateOfBirth,
+                    height,
+                    weight
+            );
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(false);
+        }
+    }
+
+    @PostMapping("/update")
+    public ResponseEntity<Boolean> update(@RequestBody UserAccountRequest requestData) {
+        try {
+            List<String> inputData = requestData.getData();
+
+            String userID = inputData.get(0);
+            String paramName = inputData.get(1);
+            String parameter = inputData.get(2);
+
+            this.userService.update(userID, paramName, parameter);
             return ResponseEntity.ok(true);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(false);
