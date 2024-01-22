@@ -1,4 +1,5 @@
 // objekt obsahující události pro komunikaci se serverem
 export enum ServerEvents {
-	SENDAGE = "user/sendAge",
+	SendAge = "user/sendAge",
+	RegisterUser = 'user/signup'
 }

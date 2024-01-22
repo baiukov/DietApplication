@@ -13,7 +13,7 @@ export class ExampleService {
 			// po kliknutí získá z elementu s id "ageInput" hodnotu
 			const yearOfBirth = $("#ageInput").val()
 			// vyvolá event posílání dat na server. Pro příklad posílá se pole s dvěma hodnoty
-			AppService.emitServer(ServerEvents.SENDAGE, [yearOfBirth, yearOfBirth])
+			AppService.emitServer(ServerEvents.SendAge, [yearOfBirth, yearOfBirth])
 		})
 	}
 
@@ -21,6 +21,8 @@ export class ExampleService {
 	public setAge = (age: string | number) => {
 		// nastaví v elementu s id "age", textový řádek získané hodnoty
 		$('#age').text(age)
+
+
 	}
 
 }

@@ -2,6 +2,7 @@ package vse.team.dietapplication_backend.user;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
@@ -26,22 +27,23 @@ public class UserEntity {
             mappedBy = "user")
     private ProfileEntity profile;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "author")
-    private List<CommentEntity> comments;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "author")
-    private List<ArticleEntity> articles;
+//    @OneToMany(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "author")
+//    private List<CommentEntity> comments;
+//
+//    @OneToMany(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "author")
+//    private List<ArticleEntity> articles;
 
     @Column(name = "email", length = 50, nullable = false)
     private String email;
 
-    private int currentYear = 2024;
+    @Column(name = "password", length = 1000, nullable = false)
+    private String password;
 
     @Column(name = "year_of_birth", nullable = false)
     private int yearOfBirth;
@@ -63,21 +65,19 @@ public class UserEntity {
         return profile;
     }
 
-    public List<CommentEntity> getComments() {
-        return comments;
-    }
-
-    public List<ArticleEntity> getArticles() {
-        return articles;
-    }
+//    public List<CommentEntity> getComments() {
+//        return comments;
+//    }
+//
+//    public List<ArticleEntity> getArticles() {
+//        return articles;
+//    }
 
     public String getEmail() {
         return email;
     }
 
-    public int getCurrentYear() {
-        return currentYear;
-    }
+    public String getPassword() { return password; }
 
     public int getYearOfBirth() {
         return yearOfBirth;
@@ -103,21 +103,19 @@ public class UserEntity {
         this.profile = profile;
     }
 
-    public void setComments(List<CommentEntity> comments) {
-        this.comments = comments;
-    }
-
-    public void setArticles(List<ArticleEntity> articles) {
-        this.articles = articles;
-    }
+//    public void setComments(List<CommentEntity> comments) {
+//        this.comments = comments;
+//    }
+//
+//    public void setArticles(List<ArticleEntity> articles) {
+//        this.articles = articles;
+//    }
 
     public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setCurrentYear(int currentYear) {
-        this.currentYear = currentYear;
-    }
+    public void setPassword(String password) { this.password = password; }
 
     public void setYearOfBirth(int yearOfBirth) {
         this.yearOfBirth = yearOfBirth;

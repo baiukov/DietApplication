@@ -56,6 +56,16 @@ public class UserRepository {
         }
     }
 
+    public UserEntity getByEmail(String email) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        try {
+
+            return session.get(UserEntity.class, email);
+        } finally {
+             session.close();
+        }
+    }
+
     public void update(UserEntity entity) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Transaction transaction = null;

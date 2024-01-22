@@ -17,7 +17,10 @@ import java.net.UnknownHostException;
  * @author Aleksei Baiukov
  */
 @SpringBootApplication
-@EntityScan("vse.team.dietapplication_backend.entities") // scanování existujících entit
+@EntityScan({
+		"vse.team.dietapplication_backend.profile",
+		"vse.team.dietapplication_backend.user"
+})
 public class DietApplicationBackendApplication {
 
 	public static void main(String[] args) {

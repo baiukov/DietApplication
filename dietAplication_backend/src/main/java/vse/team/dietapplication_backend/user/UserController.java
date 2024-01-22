@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
+import vse.team.dietapplication_backend.dataRequests.UserAccountRequest;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Aleksei Baiukov
  */
 @RestController()
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     // konstantní proměnná služby uživatelů
@@ -94,4 +95,40 @@ public class UserController {
             return ResponseEntity.status(500).body("Error processing data: " + e.getMessage());
         }
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> authorise(@RequestBody UserAccountRequest requestData) {
+        try {
+
+            List<String> inputData = requestData.getData();
+
+            String email = inputData.get(0);
+            String password = inputData.get(1);
+
+            return ResponseEntity.ok(userService.authorise(email, password));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(false);
+        }
+    }
+
+    @PostMapping("/signup")
+    public ResponseEntity<Boolean> register(@RequestBody UserAccountRequest requestData) {
+        try {
+            List<String> inputData = requestData.getData();
+
+            String email = inputData.get(0);
+            String password = inputData.get(1);
+            String gender = inputData.get(2);
+            int height = Integer.parseInt(inputData.get(3));
+            int weight = Integer.parseInt(inputData.get(4));
+            String dateOfBirth = inputData.get(5);
+
+            userService.save(email, password);
+            return ResponseEntity.ok(true);
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body(false);
+        }
+    }
+
 }

@@ -2,9 +2,11 @@ package vse.team.dietapplication_backend.profile;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.user.UserEntity;
 
+@EntityScan
 @Entity
 @Table(name = "Profiles")
 @Component

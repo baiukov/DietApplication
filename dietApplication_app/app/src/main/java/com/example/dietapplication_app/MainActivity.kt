@@ -50,6 +50,7 @@ class MainActivity : ComponentActivity() {
 
         // vytvoří lokální prohlížeč
         webView = WebView(this)
+        webView.webViewClient = CustomWebView()
 
         // nastavní použítí javascriptu v lokálním prohlížeči
         webView.settings.javaScriptEnabled = true
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
         webView.addJavascriptInterface(this, "AndroidInterface")
 
         // pošle požadavek na front-endový server a vygeneruje podle odpovědí stránku
-        webView.loadUrl("http://5.187.1.55/")
+        webView.loadUrl("http://10.0.2.2:5500")
 
         // nastavení html stránky na hlávní obrázovku android aplikace
         setContentView(webView)

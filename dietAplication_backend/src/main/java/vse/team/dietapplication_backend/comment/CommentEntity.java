@@ -2,6 +2,7 @@ package vse.team.dietapplication_backend.comment;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.user.UserEntity;
@@ -9,6 +10,7 @@ import vse.team.dietapplication_backend.user.UserEntity;
 import java.util.Date;
 
 @Entity
+@EntityScan
 @Table(name = "Comments")
 @Component
 public class CommentEntity {

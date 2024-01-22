@@ -1,5 +1,6 @@
 package vse.team.dietapplication_backend.user;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -90,9 +91,29 @@ public class UserService {
         // získá nového uživatele podle identifikáčního čísla
         UserEntity savedUser = userRepository.getById(id);
 
-        // odečte z letošního roku, který je získán z db, rok narození
-        Integer answer = savedUser.getCurrentYear() - savedUser.getYearOfBirth();
+//        // odečte z letošního roku, který je získán z db, rok narození
+//        Integer answer = savedUser.getCurrentYear() - savedUser.getYearOfBirth();
         // vrátí odpověď
-        return answer;
+        return 0;
+    }
+
+    public boolean authorise(String email, String password) {
+        UserEntity user = this.userRepository.getByEmail(email);
+        if (user == null) return false;
+
+        boolean isVerified = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword()).verified;
+        return isVerified;
+    }
+
+    public String save(String email, String password) {
+        UserEntity newUser = new UserEntity();
+
+        newUser.setEmail(email);
+        newUser.setPassword(password);
+
+        UserRepository userRepository = new UserRepository();
+        // pokusí se nového uživatele uložit do uložiště
+        String id = userRepository.save(newUser);
+        return id;
     }
 }

@@ -1,23 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sign Up</title>
-        <link rel="stylesheet" href="../css/style.css">
-    </head>
-    <body>
-        <div class="login-all">
-            <h2 class="login-h2">
-                Sign up
-            </h2>
-            <div class="profile-form">
-                <input type="text" placeholder="E-mail" name="uname" required>
-                <input type="password" placeholder="Password" name="psw" required>
 
-                <a href="../signup-next/index.html"><button type="submit" class="login-submit">Next</button></a>
-            </div>
-        </div>
-        <a href="../index.html"><p class="no_account">Already have an account?</p></a>
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+    <div class="login-all">
+        <h2 class="login-h2">
+            Sign up
+        </h2>
+        <form id='registerForm' class="profile-form" action='../signup-next/index.html'>
+            <input id='newEmail' type="email" placeholder="E-mail" name="uname" required>
+            <input id='newPassword' type="password" placeholder="Password" name="psw" required>
+
+            <button type="submit" class="login-submit">Next</button>
+        </form>
+    </div>
+    <a href="../index.html">
+        <p class="no_account">Already have an account?</p>
+    </a>
+</body>
+
 </html>
