@@ -5,6 +5,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -135,6 +136,19 @@ public class DietPlanService {
         }
 
         return mealDetail.trim();
+    }
+
+    public JSONObject getJSONPlan(String userInput) {
+        String gptResponse = this.getPlan(userInput);
+        Map<String, String > mealPlan = this.extractMealPlan(gptResponse);
+        String description = this.extractDescription(gptResponse);
+        String notes = this.extractNotes(gptResponse);
+
+        JSONObject jsonOutput = new JSONObject();
+        jsonOutput.put("mealPlan", mealPlan);
+        jsonOutput.put("description", description);
+        jsonOutput.put("notes", notes);
+        return jsonOutput;
     }
 
 

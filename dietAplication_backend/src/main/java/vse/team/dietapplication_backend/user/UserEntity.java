@@ -20,23 +20,23 @@ public class UserEntity {
     @Column(name = "id", columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "user")
-    private ProfileEntity profile;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "author")
-    private List<CommentEntity> comments;
-
-    @OneToMany(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "author")
-    private List<ArticleEntity> articles;
+//    @OneToOne(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "user")
+//    private ProfileEntity profile;
+//
+//    @OneToMany(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "author")
+//    private List<CommentEntity> comments;
+//
+//    @OneToMany(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "author")
+//    private List<ArticleEntity> articles;
 
     @Column(name = "email", length = 50, nullable = false)
     private String email;
@@ -59,17 +59,17 @@ public class UserEntity {
         return id;
     }
 
-    public ProfileEntity getProfile() {
-        return profile;
-    }
-
-    public List<CommentEntity> getComments() {
-        return comments;
-    }
-
-    public List<ArticleEntity> getArticles() {
-        return articles;
-    }
+//    public ProfileEntity getProfile() {
+//        return profile;
+//    }
+//
+//    public List<CommentEntity> getComments() {
+//        return comments;
+//    }
+//
+//    public List<ArticleEntity> getArticles() {
+//        return articles;
+//    }
 
     public String getEmail() {
         return email;
@@ -99,17 +99,17 @@ public class UserEntity {
         this.id = id;
     }
 
-    public void setProfile(ProfileEntity profile) {
-        this.profile = profile;
-    }
-
-    public void setComments(List<CommentEntity> comments) {
-        this.comments = comments;
-    }
-
-    public void setArticles(List<ArticleEntity> articles) {
-        this.articles = articles;
-    }
+//    public void setProfile(ProfileEntity profile) {
+//        this.profile = profile;
+//    }
+//
+//    public void setComments(List<CommentEntity> comments) {
+//        this.comments = comments;
+//    }
+//
+//    public void setArticles(List<ArticleEntity> articles) {
+//        this.articles = articles;
+//    }
 
     public void setEmail(String email) {
         this.email = email;

@@ -7,7 +7,7 @@
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/dietDB</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.connection.password">Aa123456</property>
+        <property name="hibernate.connection.password"></property>
 
         <property name="hibernate.connection.CharSet">utf8</property>
         <property name="hibernate.connection.characterEncoding">utf8</property>

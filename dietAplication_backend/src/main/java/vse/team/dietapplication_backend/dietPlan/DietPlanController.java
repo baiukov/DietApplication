@@ -17,26 +17,12 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class DietPlanController {
-    Map<String, String> mealPlan;
     private DietPlanService dietPlanService;
     public DietPlanController (DietPlanService dietPlanService) {
         this.dietPlanService = dietPlanService;
     }
     @GetMapping("/plan")
     public JSONObject getPlan (String userInput) {
-
-        String gptResponse = dietPlanService.getPlan(userInput);
-        mealPlan = dietPlanService.extractMealPlan(gptResponse);
-        String description = dietPlanService.extractDescription(gptResponse);
-        String notes = dietPlanService.extractNotes(gptResponse);
-
-        JSONObject jsonOutput = new JSONObject();
-        jsonOutput.put("mealPlan", mealPlan);
-        jsonOutput.put("description", description);
-        jsonOutput.put("notes", notes);
-
-
-       return jsonOutput;
-
+        return this.dietPlanService.getJSONPlan(userInput);
     }
 }

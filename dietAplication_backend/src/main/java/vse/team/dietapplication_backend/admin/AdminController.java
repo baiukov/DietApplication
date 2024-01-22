@@ -36,10 +36,10 @@ public class AdminController extends UserController {
         return super.addComment(userId, comment);
     }
 
-    @PutMapping("/{userId}/comments/{commentId}")
-    public ResponseEntity<String> updateComment(@PathVariable String userId, @PathVariable String commentId, @RequestBody CommentEntity updatedComment) {
-        return super.updateUserComment(userId, commentId, updatedComment);
-    }
+//    @PutMapping("/{userId}/comments/{commentId}")
+//    public ResponseEntity<String> updateComment(@PathVariable String userId, @PathVariable String commentId, @RequestBody CommentEntity updatedComment) {
+//        return super.updateUserComment(userId, commentId, updatedComment);
+//    }
 
     @DeleteMapping("/articles/{articleId}")
     public ResponseEntity<String> deleteArticle(@PathVariable String articleId) {
