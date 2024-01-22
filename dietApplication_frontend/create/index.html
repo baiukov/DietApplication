@@ -13,14 +13,32 @@
     <div class="plan-nav">
         <a href="../main/index.html"><i class="fa-solid fa-arrow-left"></i></a>
     </div>
-    <h2 class="plan-h2">
-        NEW PLAN
+    <h2 class="plan-h2">Create your new diet plan
     </h2>
     <div id="profile-all">
         <div class="profile-form" id="form-add-plan">
-            <input type="text" placeholder="Name" name="name" required>
-            <input type="text" placeholder="Number of days" name="days" required>
-            <textarea type='text' name='requirements' placeholder='Dietary requirements'></textarea>
+            <input type="text" placeholder="Name" id="dietName" required>
+            <input type="number" placeholder="Number of days" id="dietPlanDays" required>
+            <div class="diet-selector">
+                <label for="dietType">Choose a Diet Plan:</label>
+                <select id="dietType" name="dietType">
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="low-Carb">Low-Carb</option>
+                    <option value="keto">Ketogenic</option>
+                    <option value="paleo">Paleo</option>
+                    <option value="mediterranean">Mediterranean</option>
+                    <option value="glutenFree">Gluten-Free</option>
+                    <option value="heartHealthy">Heart-Healthy</option>
+                    <option value="diabetic">Diabetic</option>
+                    <option value="highProtein">High Protein</option>
+                    <option value="whole30">Whole30</option>
+                    <option value="pescatarian">Pescatarian</option>
+                    <option value="flexitarian">Flexitarian</option>
+                    <option value="dairyFree">Dairy-Free</option>
+                </select>
+            </div>
+            <input type='text' id='requirements' placeholder='Dietary preferences'></input>
 
             <button type="submit" class="login-submit">Add</button>
         </div>

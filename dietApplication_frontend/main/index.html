@@ -11,55 +11,60 @@
 
 <body>
     <div class="main-nav">
-        <a href="../profile/index.html"><i class="fa-regular fa-user"></i></a>
+        <a href="../profile/index.html"><span id="userName">Max</span><i class="fa-regular fa-user"></i></a>
     </div>
-    <h2 class="main-h2">
-        Welcome, {name}!
-    </h2>
+
     <h2 class="main-h3">
-        Here are your diet plans
+        Here are your diet plans:
     </h2>
+
+
     <div class="plans">
-        <!--<a>
-            <div class="main-button">
-                <i class="fa-solid fa-table-columns"></i>
-                <p>Diet plan</p>
+        <article class="day-plan">
+            <h3 class="day-title">Day 1</h3>
+            <p class="day-description">Description</p>
+
+            <section class="meal" id="breakfast">
+                <h4>Breakfast</h4>
+                <ul>
+                    <li>Dish Name</li>
+                </ul>
+            </section>
+            <section class="meal" id="lunch">
+                <h4>Lunch</h4>
+                <ul>
+                    <li>Dish Name</li>
+                </ul>
+            </section>
+
+            <section class="meal" id="dinner">
+                <h4>Dinner</h4>
+                <ul>
+                    <li>Dish Name</li>
+                </ul>
+            </section>
+
+            <section class="meal" id="snack">
+                <h4>Snack</h4>
+                <ul>
+                    <li>Dish Name</li>
+                </ul>
+            </section>
+
+            <div class="notes">
+                <h4>Notes</h4>
+                <p>Some important notes or reminders for the day.</p>
             </div>
-        </a>-->
-        <a href="../plan/index.html">
-            <div class="main-button">
-                <p>Low - carb</p>
-            </div>
-        </a>
-        <a>
-            <div class="main-button">
-                <p>{name}</p>
-            </div>
-        </a>
-        <a>
-            <div class="main-button">
-                <p>{name}</p>
-            </div>
-        </a>
-        <a>
-            <div class="main-button">
-                <p>{name}</p>
-            </div>
-        </a>
-        <a>
-            <div class="main-button">
-                <p>{name}</p>
-            </div>
-        </a>
-        <a>
-            <div class="main-button">
-                <p>{name}</p>
-            </div>
-        </a>
+        </article>
+
+
+
     </div>
-    <a href="../create/index.html"><div class="main-add">
-        <i class="fa-solid fa-plus"></i>
-    </div></a>
+    <a href="../create/index.html">
+        <div class="main-add">
+            <i class="fa-solid fa-plus"></i>
+        </div>
+    </a>
     <div class="shadow-bottom"></div>
 </body>
 
