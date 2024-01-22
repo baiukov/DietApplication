@@ -13,6 +13,7 @@ import java.util.List;
 @Entity
 @Table(name = "Users")
 @Component
+@Access(AccessType.FIELD)
 public class UserEntity {
 
     @Id
@@ -21,11 +22,11 @@ public class UserEntity {
     @Column(name = "id", columnDefinition = "VARCHAR(255) CHARACTER SET utf8mb4")
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY,
-            mappedBy = "user")
-    private ProfileEntity profile;
+//    @OneToOne(cascade = CascadeType.ALL,
+//            orphanRemoval = true,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "user")
+//    private ProfileEntity profile;
 
 //    @OneToMany(cascade = CascadeType.ALL,
 //            orphanRemoval = true,
@@ -61,9 +62,9 @@ public class UserEntity {
         return id;
     }
 
-    public ProfileEntity getProfile() {
-        return profile;
-    }
+//    public ProfileEntity getProfile() {
+//        return profile;
+//    }
 
 //    public List<CommentEntity> getComments() {
 //        return comments;
@@ -99,9 +100,9 @@ public class UserEntity {
         this.id = id;
     }
 
-    public void setProfile(ProfileEntity profile) {
+/*    public void setProfile(ProfileEntity profile) {
         this.profile = profile;
-    }
+    }*/
 
 //    public void setComments(List<CommentEntity> comments) {
 //        this.comments = comments;
