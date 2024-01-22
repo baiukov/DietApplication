@@ -1,5 +1,5 @@
 import { AppService } from './app.service'
-import { ExampleModule } from './example/example.module'
+import { DietPlanModule } from './dietPlan/dietPlan.module'
 import { UserModule } from './user/user.module'
 
 /*
@@ -17,9 +17,8 @@ export class AppModule {
 
 	// metoda spuštění vedlejších modulů
 	private initModules = () => {
-		// vytvoří se příkladový modul
-		new ExampleModule()
 
+		new DietPlanModule()
 		new UserModule()
 	}
 

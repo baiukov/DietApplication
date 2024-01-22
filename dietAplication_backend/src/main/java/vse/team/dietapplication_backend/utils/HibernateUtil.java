@@ -5,6 +5,10 @@ import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
+import vse.team.dietapplication_backend.courses.CourseEntity;
+import vse.team.dietapplication_backend.days.DayEntity;
+import vse.team.dietapplication_backend.dietPlan.DietEntity;
+import vse.team.dietapplication_backend.food.FoodEntity;
 import vse.team.dietapplication_backend.profile.ProfileEntity;
 import vse.team.dietapplication_backend.user.UserEntity;
 
@@ -26,6 +30,10 @@ public class HibernateUtil {
                     .addAnnotatedClass(ProfileEntity.class)
                     .addAnnotatedClass(ArticleEntity.class)
                     .addAnnotatedClass(CommentEntity.class)
+                    .addAnnotatedClass(DietEntity.class)
+                    .addAnnotatedClass(DayEntity.class)
+                    .addAnnotatedClass(CourseEntity.class)
+                    .addAnnotatedClass(FoodEntity.class)
                     .buildSessionFactory();
         } catch (Exception e) {
             e.printStackTrace();

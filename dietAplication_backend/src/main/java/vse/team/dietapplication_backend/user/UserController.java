@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
+import vse.team.dietapplication_backend.utils.DataRequest;
 
 import java.util.List;
 
@@ -96,7 +97,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> authorise(@RequestBody UserAccountRequest requestData) {
+    public ResponseEntity<String> authorise(@RequestBody DataRequest requestData) {
         try {
 
             List<String> inputData = requestData.getData();
@@ -117,7 +118,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Boolean> register(@RequestBody UserAccountRequest requestData) {
+    public ResponseEntity<Boolean> register(@RequestBody DataRequest requestData) {
         try {
             List<String> inputData = requestData.getData();
 
@@ -143,7 +144,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity<Boolean> update(@RequestBody UserAccountRequest requestData) {
+    public ResponseEntity<Boolean> update(@RequestBody DataRequest requestData) {
         try {
             List<String> inputData = requestData.getData();
 

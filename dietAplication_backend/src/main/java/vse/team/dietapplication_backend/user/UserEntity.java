@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.article.ArticleEntity;
 import vse.team.dietapplication_backend.comment.CommentEntity;
+import vse.team.dietapplication_backend.dietPlan.DietEntity;
 import vse.team.dietapplication_backend.profile.ProfileEntity;
 
 import java.time.LocalDate;
@@ -39,6 +40,14 @@ public class UserEntity {
             fetch = FetchType.LAZY,
             mappedBy = "author")
     private List<ArticleEntity> articles;
+
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            mappedBy = "user"
+    )
+    private List<DietEntity> plans;
 
     @Column(name = "email", length = 50, nullable = false, unique = true)
     private String email;
@@ -98,6 +107,10 @@ public class UserEntity {
         return isAdmin;
     }
 
+    public List<DietEntity> getPlans() {
+        return plans;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
@@ -137,4 +150,6 @@ public class UserEntity {
     public void setIsAdmin(Boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
+
+    public void setPlans(List<DietEntity> plans) { this.plans = plans; }
 }

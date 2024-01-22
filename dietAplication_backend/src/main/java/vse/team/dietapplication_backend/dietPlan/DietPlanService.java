@@ -7,10 +7,17 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
+import vse.team.dietapplication_backend.courses.CourseEntity;
+import vse.team.dietapplication_backend.days.DayEntity;
+import vse.team.dietapplication_backend.food.FoodEntity;
+import vse.team.dietapplication_backend.user.UserEntity;
+import vse.team.dietapplication_backend.user.UserRepository;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -151,5 +158,61 @@ public class DietPlanService {
         return jsonOutput;
     }
 
+    public void save(String userID, String planName, JSONObject plan) {
+        UserRepository userRepository = new UserRepository();
+        UserEntity user = userRepository.getById(userID);
+        // ! if (user == null) return;
+
+
+        DietRepository dietRepository = new DietRepository();
+        DietEntity dietPlan = new DietEntity();
+
+        String description = (String) plan.get("description");
+        Object mealPlan = plan.get("mealPlan");
+        Map<String, String> courses = new HashMap<>();
+        if (mealPlan != null) {
+            courses = (Map<String, String>) mealPlan;
+        }
+
+        dietPlan.setName(planName);
+        dietPlan.setDescription(description);
+        dietPlan.setUser(user);
+
+        dietRepository.save(dietPlan);
+
+        DayEntity day = new DayEntity();
+        day.setPlan(dietPlan);
+        dietRepository.save(day);
+
+        for (Map.Entry<String, String> entry : courses.entrySet()) {
+            String courseName = entry.getKey();
+            CourseEntity course = new CourseEntity();
+            course.setName(courseName);
+            course.setDay(day);
+            dietRepository.save(course);
+
+            FoodEntity food = new FoodEntity();
+            food.setName(entry.getValue());
+            food.setCourse(course);
+            dietRepository.save(food);
+        }
+
+    }
+
+    public JSONObject getPlans(String userID) {
+        DietRepository dietRepository = new DietRepository();
+
+        UserRepository userRepository = new UserRepository();
+        UserEntity user = userRepository.getById(userID);
+
+        if (user == null) return null;
+
+        List<DietEntity> plans = dietRepository.getByUser(user);
+        DietEntity plan = plans.get(0);
+
+        JSONObject jsonPlan = new JSONObject();
+        jsonPlan.put("days", plan.getDays());
+        return jsonPlan;
+    }
 
 }

@@ -1,8 +1,8 @@
-package vse.team.dietapplication_backend.user;
+package vse.team.dietapplication_backend.utils;
 
 import java.util.List;
 
-public class UserAccountRequest {
+public class DataRequest {
 
     private List<String> data;
 

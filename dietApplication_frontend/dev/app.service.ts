@@ -7,7 +7,7 @@ import { ServerEvents } from './enums/ServerEvents.enum'
 */
 export class AppService {
 	// objekt, ve kterém se uloží zaregistrováné lokální událostí 
-	private static events: Record<Events, Function>;
+	private static events: Record<string, Function> = {};
 	
 	// objekt, ve kterém se uloží vnější serverové událostí
 	private static serverEvents: Record<string, Function> = {}
