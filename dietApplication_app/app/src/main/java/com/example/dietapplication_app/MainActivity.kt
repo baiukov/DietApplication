@@ -2,14 +2,13 @@ package com.example.dietapplication_app
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.webkit.JavascriptInterface
 import android.webkit.WebSettings
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -26,6 +25,7 @@ import javax.net.ssl.X509TrustManager
 class MainActivity : ComponentActivity() {
     // proměnná webového rozhrání
     private lateinit var webView: WebView
+
     // proměnná klienta pro http komunikaci s webserverem
     private lateinit var client: OkHttpClient
 
@@ -73,6 +73,7 @@ class MainActivity : ComponentActivity() {
     @JavascriptInterface
     fun sendDataToWebView(eventName: String, data: String) {
         // vyvolá metodu v javascriptu frontendové částí
+        println(data)
         webView.post {
             // vyvolá metodu getData s parametry názvu událostí a daty
             webView.evaluateJavascript("getData('${eventName}', '${data}')", null)
@@ -82,32 +83,31 @@ class MainActivity : ComponentActivity() {
     // metoda zajíšťující komunikaci s webovém serverem
     @SuppressLint("JavascriptInterface")
     @JavascriptInterface
-    fun emitServer(endpoint: String, data: String): String {
-        // URL adresa webového backend serveru. Endpoint - je koncový bod nastavený na serveru podle názvu události
-        val url = "https://10.0.2.2:8080/api/$endpoint"
+    fun emitServer(endpoint: String, data: String) {
+        lifecycleScope.launch {
+            try {
+                val url = "https://10.0.2.2:8181/api/$endpoint"
+                val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
+                val request = Request.Builder()
+                    .url(url)
+                    .post(requestBody)
+                    .build()
 
-        // zabalí data do příslušné třídy pro požadvek
-        val requestBody = data.toRequestBody("application/json".toMediaTypeOrNull())
-
-        // vytvoří požadvek podle URL webserveru a dat
-        val request = Request.Builder()
-            .url(url)
-            .post(requestBody)
-            .build()
-
-        // pokusí se poslat požadavek na webserver
-        val response = client.newCall(request).execute()
-
-        // získá odpověď na požadavek
-        val responseBody = response.body?.string()
-
-        // pokud je odpověď existující, přepošle získaná data na frontend podle názvu eventu
-        if (responseBody != null) {
-            sendDataToWebView(endpoint, responseBody)
+                withContext(Dispatchers.IO) {
+                    client.newCall(request).execute().use { response ->
+                        val responseBody = response.body?.string()
+                        println(responseBody)
+                        responseBody?.let {
+                            sendDataToWebView(endpoint, it)
+                        } ?: run {
+                            // Handle error scenario
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                // Handle the exception
+            }
         }
-
-        // každopadně uzavře komunikační požadavek
-        response.close()
-        return responseBody ?: "No data"
     }
+
 }
