@@ -5,6 +5,7 @@ import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 import vse.team.dietapplication_backend.courses.CourseEntity;
@@ -16,10 +17,7 @@ import vse.team.dietapplication_backend.user.UserRepository;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 
 /*
  * Třída DietPlanService - je třída služby plánů, která se zabývá zpracováním jejích logiky.
@@ -147,7 +145,7 @@ public class DietPlanService {
 
     public JSONObject getJSONPlan(String userInput) {
         String gptResponse = this.getPlan(userInput);
-        Map<String, String > mealPlan = this.extractMealPlan(gptResponse);
+        Map<String, String> mealPlan = this.extractMealPlan(gptResponse);
         String description = this.extractDescription(gptResponse);
         String notes = this.extractNotes(gptResponse);
 
@@ -163,56 +161,84 @@ public class DietPlanService {
         UserEntity user = userRepository.getById(userID);
         // ! if (user == null) return;
 
-
         DietRepository dietRepository = new DietRepository();
         DietEntity dietPlan = new DietEntity();
-
         String description = (String) plan.get("description");
-        Object mealPlan = plan.get("mealPlan");
-        Map<String, String> courses = new HashMap<>();
-        if (mealPlan != null) {
-            courses = (Map<String, String>) mealPlan;
-        }
+        JSONObject mealPlan = (JSONObject) plan.get("mealPlan");
+
+//        Map<String, String> courses;
+//        if (mealPlan != null) {
+//            courses = (Map<String, String>) mealPlan;
+//            System.out.println(courses);
+//        }
+
+//        System.out.println("courses::   " + courses);
 
         dietPlan.setName(planName);
         dietPlan.setDescription(description);
         dietPlan.setUser(user);
-
+        dietRepository.deleteFirstDietPlanByUser(userID);
         dietRepository.save(dietPlan);
 
         DayEntity day = new DayEntity();
         day.setPlan(dietPlan);
         dietRepository.save(day);
 
-        for (Map.Entry<String, String> entry : courses.entrySet()) {
-            String courseName = entry.getKey();
+        String[] coursesNames = new String[]{"breakfast", "lunch", "dinner"};
+        for (String courseName : coursesNames) {
             CourseEntity course = new CourseEntity();
             course.setName(courseName);
             course.setDay(day);
             dietRepository.save(course);
 
             FoodEntity food = new FoodEntity();
-            food.setName(entry.getValue());
+            food.setName(mealPlan.get(courseName).toString());
             food.setCourse(course);
             dietRepository.save(food);
         }
 
+//        for (Map.Entry<String, String> entry : courses.entrySet()) {
+//            String courseName = entry.getKey();
+//            CourseEntity course = new CourseEntity();
+//            course.setName(courseName);
+//            course.setDay(day);
+//            dietRepository.save(course);
+//
+//            FoodEntity food = new FoodEntity();
+//            food.setName(entry.getValue());
+//            food.setCourse(course);
+//            dietRepository.save(food);
+//        }
+
     }
 
-    public JSONObject getPlans(String userID) {
+    public JSONArray getPlans(String userID) {
         DietRepository dietRepository = new DietRepository();
-
         UserRepository userRepository = new UserRepository();
         UserEntity user = userRepository.getById(userID);
-
-        if (user == null) return null;
+        System.out.println("Get plan:" + user.getId());
 
         List<DietEntity> plans = dietRepository.getByUser(user);
         DietEntity plan = plans.get(0);
 
-        JSONObject jsonPlan = new JSONObject();
-        jsonPlan.put("days", plan.getDays());
-        return jsonPlan;
+        List<DayEntity> days = dietRepository.getDaysByPlan(plan);
+        System.out.println(days);
+        JSONArray daysArray = new JSONArray();
+        JSONArray mealPlans = new JSONArray();
+        for (DayEntity day : days) {
+            List<CourseEntity> courses = dietRepository.getCourseByDay(day);
+            for (CourseEntity course : courses){
+                JSONObject courseFoodPair = new JSONObject();
+                String courseName = course.getName();
+                FoodEntity food = dietRepository.getFoodByCourse(course).get(0);
+                String foodName = food.getName();
+                courseFoodPair.put(courseName, foodName);
+                mealPlans.put(courseFoodPair);
+            }
+            daysArray.put(mealPlans);
+        }
+
+        return daysArray;
     }
 
 }

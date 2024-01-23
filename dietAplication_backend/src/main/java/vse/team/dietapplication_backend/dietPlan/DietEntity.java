@@ -11,7 +11,7 @@ import java.util.List;
 
 @EntityScan
 @Entity
-@Table(name="DietPlans")
+@Table(name="diet_plans")
 @Component
 public class DietEntity implements IDietEntity {
 

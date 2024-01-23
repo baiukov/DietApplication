@@ -1,12 +1,12 @@
 package vse.team.dietapplication_backend.dietPlan;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vse.team.dietapplication_backend.utils.DataRequest;
 
 import java.util.List;
-import java.util.Map;
 
 /*
  * Třída DietPlanController - je třída správce plánů, která se zabývá operováním událostí.
@@ -25,18 +25,18 @@ public class DietPlanController {
     @PostMapping("/plan")
     public ResponseEntity<JSONObject> getPlan(@RequestBody DataRequest requestData) {
         try {
-            System.out.println("her");
+
             List<String> inputData = requestData.getData();
 
             String userID = inputData.get(0);
             String planName = inputData.get(1);
-            String userInput = inputData.get(2);
+            String userInput = "user_profile:" + inputData.get(2);
+
 
             JSONObject plan = this.dietPlanService.getJSONPlan(userInput);
 
             this.dietPlanService.save(userID, planName, plan);
 
-            System.out.println(plan);
             return ResponseEntity.ok(plan);
         } catch (Exception e) {
             return ResponseEntity.status(500).body(null);
@@ -44,16 +44,16 @@ public class DietPlanController {
     }
 
     @PostMapping("/getPlan")
-    public ResponseEntity<JSONObject> getPlansByUserID(@RequestBody DataRequest requestData) {
-        try {
+    public String getPlansByUserID(@RequestBody DataRequest requestData) {
+
+            System.out.println("Get Plan");
             List<String> inputData = requestData.getData();
-
             String userID = inputData.get(0);
+//            String response = ResponseEntity.ok(this.dietPlanService.getPlans(userID)).toString();
+//            System.out.println(response);
+            JSONArray a = this.dietPlanService.getPlans(userID);
+            return a.toString();
 
-            return ResponseEntity.ok(this.dietPlanService.getPlans(userID));
 
-        } catch (Exception e) {
-            return ResponseEntity.status(500).body(null);
-        }
     }
 }
